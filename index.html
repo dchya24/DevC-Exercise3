@@ -61,7 +61,7 @@
       fetch(url)
         .then(resp => resp.json())
         .then(commits => {
-          document.getElementById("count").innerHTML = commits.count
+          document.getElementById("count").innerHTML = commits.results.length
           toRender(commits.results)                          
         });
     }
