@@ -10,9 +10,8 @@
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
-  <div class="container mt-4">
-    <div class="card text-left">
-      <div class="card-header">
+    <div class="card text-left mt-4 mx-2">
+      <div class="card-header text-light bg-dark">
         <h4 class="card-title">Data Planet</h4>
       </div>
       <div class="card-body">
@@ -31,27 +30,33 @@
           </div>
         </div>
 
-        <table class="table table-striped">
-          <thead>
+        <div clas="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                  <th>No</th>
+                  <th>Name</td>
+                  <th>Rotation Periode</th>
+                  <th>Orbital Periode</th>
+                  <th>Diameter</th>
+                  <th>Climate</th>
+                  <th>Gravity</th>
+                  <th class="w-25">Residents</th>
+                  <th>Film</th>
+                </tr>
+            </thead>
+            <tbody id="table_data">
               <tr>
-                <th>No</th>
-                <th>Name</td>
-                <th>Rotation Periode</th>
-                <th>Orbital Periode</th>
-                <th>Diameter</th>
-                <th>Climate</th>
-                <th>Gravity</th>
+                <td colspan="9">
+                  <h2 class="text-center">Waiting...</h2>
+                </td>
               </tr>
-          </thead>
-          <tbody id="table_data">
-            <tr>
-              <td colspan="7"> Waiting... </td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+        
       </div>
     </div>
-  </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -69,6 +74,16 @@
     function toRender(raw){
       var render = "";
       raw.map(function(item, index){
+        var resident = ""
+        var film = ""
+
+        item.residents.map((resident_item, resident_index) => {
+          resident += `<a class='btn btn-sm btn-primary m-1' href='${resident_item}'> Residents ${resident_index + 1}</a>`
+        })
+        item.films.map((film_item, film_index) => {
+          film += `<a class='btn btn-sm btn-primary m-1' href='${film_item}'> Film ${film_index + 1}</a>`
+        })
+
         render += `<tr>
                       <td> ${index + 1} </td>
                       <td> ${item.name} </td>
@@ -77,6 +92,8 @@
                       <td> ${item.diameter} </td>
                       <td> ${item.climate} </td>
                       <td> ${item.gravity} </td>
+                      <td> ${resident} </td>  
+                      <td> ${film} </td>  
                     </tr>`.trim()
       })
       document.getElementById("table_data").innerHTML = render
